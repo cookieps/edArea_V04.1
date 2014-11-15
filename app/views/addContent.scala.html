@@ -1,0 +1,59 @@
+@(createContentForm: Form[CourseContent], id : String)
+
+
+<html>
+    <head>
+        <title>edArea creating course</title>
+        <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
+        <link rel="stylesheet" type="text/css" media="screen"
+        href="@routes.Assets.at("stylesheets/login.css")">
+
+    </head>
+    <body>
+        <header>
+            <a href="@routes.Application.index" id="logo">edArea Creating content</a>
+
+        </header>
+
+
+
+
+
+        @helper.form(action = routes.Content.addContent(id), 'enctype -> "multipart/form-data") {
+            <h1>Создание конента для @id</h1>
+
+            @if(createContentForm.hasGlobalErrors) {
+                <p class="error">
+                @createContentForm.globalError
+                </p>
+            }
+
+        <p>
+            <input type="text" name="courseName" placeholder="Course Name" value="@createContentForm("courseName").value">
+        </p>
+        <p>
+            <input type="text" name="contentName" placeholder="Content Name" value="@createContentForm("contentName").value">
+        </p>
+        <p>
+            <input type="number" name="id" placeholder="Content Id" value="@createContentForm("id").value">
+        </p>
+        <p>
+            <input type="text" name="contentType" placeholder="Content Type" value="@createContentForm("contentType").value">
+        </p>
+        <p>
+            <input type="text" name="content" placeholder="Text" value="@createContentForm("content").value">
+        </p>
+        <p>
+            <input type="text" name="pathFiles" placeholder="Path" value="@createContentForm("pathFiles").value">
+        </p>
+        <p>
+            <button type="submit"name="submit" value="Upload">Create</button>
+        </p>
+
+
+        }
+
+    </body>
+
+
+</html>

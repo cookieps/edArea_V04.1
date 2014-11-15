@@ -14,12 +14,12 @@
         @message
         </blockquote>
 
-        <h1>Upload a picture</h1>
+        <h1>Загрузить Логотип курса</h1>
 
 
-        <form name="fileUploadForm" method="POST" enctype="multipart/form-data" action="@routes.Courses.uploadFile()">
-            File 1: <br /> <input type="file" name="filePart1" id="filePart1"><br />
-            <input type="submit">
+        <form name="fileUploadForm"  method="POST" enctype="multipart/form-data" action="@routes.Courses.uploadFile()">
+            File 1: <br /> <input type="file" required="" name="filePart1" id="filePart1"><br />
+            <input type="submit" value="Загрузить">
         </form>
     </body>
 </html>

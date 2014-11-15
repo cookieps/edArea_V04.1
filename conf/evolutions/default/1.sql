@@ -13,6 +13,17 @@ create table course (
   constraint pk_course primary key (course_name))
 ;
 
+create table course_content (
+  id                        integer not null,
+  course_name               varchar(255),
+  content_name              varchar(255),
+  content_id                integer,
+  path_file                 varchar(255),
+  email                     varchar(255),
+  content                   TEXT,
+  constraint pk_course_content primary key (id))
+;
+
 create table friends (
   id                        integer not null,
   user_email                varchar(255),
@@ -44,6 +55,8 @@ create table user (
 
 create sequence course_seq;
 
+create sequence course_content_seq;
+
 create sequence friends_seq;
 
 create sequence notification_seq;
@@ -59,6 +72,8 @@ SET REFERENTIAL_INTEGRITY FALSE;
 
 drop table if exists course;
 
+drop table if exists course_content;
+
 drop table if exists friends;
 
 drop table if exists notification;
@@ -68,6 +83,8 @@ drop table if exists user;
 SET REFERENTIAL_INTEGRITY TRUE;
 
 drop sequence if exists course_seq;
+
+drop sequence if exists course_content_seq;
 
 drop sequence if exists friends_seq;
 

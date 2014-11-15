@@ -18,6 +18,9 @@
         @for(course <- courses) {
             <li>
                 <a href="@routes.Courses.showCoursePage(course.courseName)">@course.courseName</a>
+                @if(course.email == user.email) {
+                    <a href="@routes.Content.createContent(course.courseName)"> Добавить контент</a>
+                }
             </li>
         }
         </ul>

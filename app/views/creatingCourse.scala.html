@@ -14,7 +14,7 @@
         </header>
 
         @helper.form(action = routes.Courses.add(), 'enctype -> "multipart/form-data") {
-            <h1>Creating Course</h1>
+            <h1>Creating Content</h1>
 
             @if(creatingCourse_form.hasGlobalErrors) {
                 <p class="error">
@@ -23,16 +23,16 @@
             }
 
             <p>
-                <input type="text" name="courseName" placeholder="Course Name" value="@creatingCourse_form("courseName").value">
+                <input required="" type="text" name="courseName" placeholder="Course Name" value="@creatingCourse_form("courseName").value">
             </p>
             <p>
-                <input type="text" name="science" placeholder="Science" value="@creatingCourse_form("science").value">
+                <input required="" type="text" name="science" placeholder="Science" value="@creatingCourse_form("science").value">
             </p>
             <p>
-                <input type="text" name="aboutCourse" placeholder="About course" value="@creatingCourse_form("aboutCourse").value">
+                <input required="" type="text" name="aboutCourse" placeholder="About course" value="@creatingCourse_form("aboutCourse").value">
             </p>
             <p>
-                <button type="submit"name="submit" value="Upload">Create</button>
+                <button  type="submit"name="submit" value="Upload">Create</button>
             </p>
         }
 
