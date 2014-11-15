@@ -29,14 +29,21 @@ import java.util.UUID;
 public class Content extends Controller {
 
     public static Result createContent(String idCont) {
+        try {                           //проверка принадлежит ли созданный курс данному пользователю
+            Course cour = Course.find.where().like("courseName", "%" + idCont + "%").like("email", "%" + request().username() + "%").findUnique();
 
-        List<CourseContent> contents = CourseContent.find.where().like("courseName", "%" + idCont + "%").findList();
+            if (cour.email.equals(request().username())) {
 
-            return ok(addContent.render(Form.form(CourseContent.class), idCont, contents));
+                List<CourseContent> contents = CourseContent.find.where().like("courseName", "%" + idCont + "%").findList();
+
+                return ok(addContent.render(Form.form(CourseContent.class), idCont, contents));
+            }
+        }catch (NullPointerException e) {
+           return redirect(routes.Application.index());
+        }
 
 
-
-
+        return redirect(routes.Application.index());
     }
 
     public static Result addContent(String idCont) {
