@@ -48,13 +48,6 @@ public class Content extends Controller {
 
     public static Result addContent(String idCont) {
 
-        //Course currentCourse =  Course.find.where().like("email", "%"+request().username()+"%").like("courseName");
-        //List<Course> course = Course.find.where().like("email", "%"+request().username()+"%").findList();
-
-
-
-        //find.where().and(Expr.like("email_to", "%" + request().username() + "%"), Expr.like("email_from", "%"+email+"%")).findUnique().delete();
-
         if(CourseContent.find.where().like("id", "%" + null + "%").findUnique() == null) {
 
             System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
@@ -80,23 +73,20 @@ public class Content extends Controller {
 
 
 
-
-
-        //List<Notification> notifications = new ArrayList<>();
-        //notifications = Notification.find.where().like("email_to", "%"+request().username()+"%").findList();
-        //return ok(index.render(User.find.byId(request().username()), notifications));
         return redirect(routes.Application.index());
     }
 
 
 
-    public static Result showContent()  {
+    public static Result showContent(String courseId, String contentId)  {
+
+    List<CourseContent> content = CourseContent.find.where().like("courseName","%"+courseId+"%").like("contentName","%"+contentId+"%").findList();
 
 
 
-
-
-        return  ok();
+        //user,course, contents: List[CourseContent]
+        //return  ok(moreinfocontent.render(User.find.byId(request().username(),Course.find.byId(courseId),content));
+        return ok(moreinfocontent.render(User.find.byId(request().username()),Course.find.byId(courseId),content));
     }
 
 

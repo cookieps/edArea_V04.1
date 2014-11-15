@@ -1,0 +1,27 @@
+@(user: User, course: Course, contents: List[CourseContent])
+@main(user) {
+
+
+    <h1>Курс @course.courseName</h1>
+    <h2>Дисциплина @course.science</h2>
+
+
+
+
+    @for(courseContent <- contents) {
+
+        <br>
+        <h4>Название урока</h4>
+        <p>@courseContent.contentName</p>
+        <p>ID урока @courseContent.id</p>
+        <p>Содержание урока @courseContent.content</p>
+
+
+    }
+
+    <dd>
+        <a href="@routes.Courses.showCoursePage(course.courseName)" >Back</a>
+
+    </dd>
+
+}

@@ -21,7 +21,8 @@
         <h2> Уроки</h2>
         @if(contents.isEmpty)  {  }  else {
                 @for(courseContent <- contents) {
-                   <h3>@courseContent.contentName</h3>
+                    <a href="@routes.Content.showContent(course.courseName, courseContent.contentName)" > <h3>@courseContent.contentName</h3></a>
+
                 }
                 }
 
