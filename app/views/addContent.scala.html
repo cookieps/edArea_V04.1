@@ -1,4 +1,4 @@
-@(createContentForm: Form[CourseContent], id : String)
+@(createContentForm: Form[CourseContent], id : String, contents: List[CourseContent])
 
 
 <html>
@@ -29,13 +29,7 @@
             }
 
         <p>
-            <input type="text" name="courseName" placeholder="Course Name" value="@createContentForm("courseName").value">
-        </p>
-        <p>
             <input type="text" name="contentName" placeholder="Content Name" value="@createContentForm("contentName").value">
-        </p>
-        <p>
-            <input type="number" name="id" placeholder="Content Id" value="@createContentForm("id").value">
         </p>
         <p>
             <input type="text" name="contentType" placeholder="Content Type" value="@createContentForm("contentType").value">
@@ -44,14 +38,44 @@
             <input type="text" name="content" placeholder="Text" value="@createContentForm("content").value">
         </p>
         <p>
-            <input type="text" name="pathFiles" placeholder="Path" value="@createContentForm("pathFiles").value">
+            <input type="text" name="pathFile" placeholder="Path" value="@createContentForm("pathFile").value">
         </p>
+
+
+            @if(contents.isEmpty)  {}else   {
+        <p> <h5>Айди созданного ранее урока</h5>
+            <input type="number"  name="contentId" placeholder="" value="@createContentForm("contentId").value">
+        </p>
+            }
+
+        <!--    <h6>Выбор урока</h6>       не хочет работать
+                @if(contents.isEmpty)  {  }  else {
+
+                <select  size="1"   >
+                    <option>Новый урок</option>
+                    @for(courseContent <- contents) {
+                        <option name="contentId"  value="@createContentForm("contentId").value">@courseContent.id</option>
+                    }
+                    }
+         -->
+        </select>
+
+
+
+
+
+
         <p>
             <button type="submit"name="submit" value="Upload">Create</button>
         </p>
 
 
         }
+
+        <dd>
+            <a href="@routes.Courses.showCourses()">Back</a>
+        </dd>
+
 
     </body>
 

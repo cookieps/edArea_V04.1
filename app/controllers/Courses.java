@@ -1,6 +1,7 @@
 package controllers;
 
 import models.Course;
+import models.CourseContent;
 import models.User;
 import play.data.Form;
 import play.mvc.Controller;
@@ -13,6 +14,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -57,7 +59,10 @@ public class Courses extends Controller
 
     public static Result showCoursePage(String courseName)
     {
-        return ok(course.render(User.find.byId(request().username()), Course.find.byId(courseName)));
+
+        List<CourseContent> contents = CourseContent.find.where().like("courseName", "%" + courseName + "%").findList();
+
+        return ok(course.render(User.find.byId(request().username()), Course.find.byId(courseName), contents));
     }
 
     public static Result uploadFile() throws IOException {    // заливка каринки на сервер

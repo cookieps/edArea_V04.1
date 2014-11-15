@@ -1,4 +1,4 @@
-@(user: User, course: Course)
+@(user: User, course: Course, contents: List[CourseContent])
 
     @main(user) {
 
@@ -17,6 +17,16 @@
         <img src="@routes.Assets.at(course.logoPath)" width="30%" height="30%" alt="лого">
         <div>Science: @course.science</div>
         <div>About course:<br>@course.aboutCourse</div>
+
+        <h2> Уроки</h2>
+        @if(contents.isEmpty)  {  }  else {
+                @for(courseContent <- contents) {
+                   <h3>@courseContent.contentName</h3>
+                }
+                }
+
+
+
 
         <br>
         <dd>

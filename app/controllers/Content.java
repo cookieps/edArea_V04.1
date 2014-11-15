@@ -28,33 +28,45 @@ import java.util.UUID;
 @Security.Authenticated(Secured.class)
 public class Content extends Controller {
 
-    public static Result createContent(String id) {
+    public static Result createContent(String idCont) {
 
-        return ok(addContent.render(Form.form(CourseContent.class),id));
+        List<CourseContent> contents = CourseContent.find.where().like("courseName", "%" + idCont + "%").findList();
+
+            return ok(addContent.render(Form.form(CourseContent.class), idCont, contents));
+
+
+
+
     }
 
-    public static Result addContent(String id) {
+    public static Result addContent(String idCont) {
 
         //Course currentCourse =  Course.find.where().like("email", "%"+request().username()+"%").like("courseName");
         //List<Course> course = Course.find.where().like("email", "%"+request().username()+"%").findList();
 
+
+
         //find.where().and(Expr.like("email_to", "%" + request().username() + "%"), Expr.like("email_from", "%"+email+"%")).findUnique().delete();
 
+        if(CourseContent.find.where().like("id", "%" + null + "%").findUnique() == null) {
+
+            System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        }
 
 
         System.out.println("__________________________________________");
-        System.out.println(id);
+        System.out.println();
 
         Form<CourseContent> createContentForm = Form.form(CourseContent.class).bindFromRequest();
 
         CourseContent newContent = new CourseContent(
-                id,
+                idCont,                                                     // имя курса для создаваемого конента
                 createContentForm.get().contentName,
-                createContentForm.get().id,
+                CourseContent.find.where().findRowCount()+1,            // уникальный айди
                 createContentForm.get().content,
-                0,    // id content
+                createContentForm.get().contentId,    // id content                                     // айди для создания и группировки нескеольки конентов одного курса
                 createContentForm.get().pathFile,
-                request().username()
+                request().username()                                    // создатель конента
         );
 
         newContent.save();
@@ -68,6 +80,19 @@ public class Content extends Controller {
         //return ok(index.render(User.find.byId(request().username()), notifications));
         return redirect(routes.Application.index());
     }
+
+
+
+    public static Result showContent()  {
+
+
+
+
+
+        return  ok();
+    }
+
+
 
 
 
