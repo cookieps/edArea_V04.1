@@ -3,11 +3,13 @@ import models.User;
 import play.Application;
 import play.GlobalSettings;
 import play.libs.Yaml;
-
 import java.util.List;
 
 public class Global extends GlobalSettings
 {
+
+
+
     @Override
     public void onStart(Application app) {
         // Check if the database is empty
@@ -15,4 +17,8 @@ public class Global extends GlobalSettings
             Ebean.save((List) Yaml.load("initial-data.yml"));
         }
     }
+
+
+
+
 }

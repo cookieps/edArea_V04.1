@@ -1,7 +1,7 @@
 @(createContentForm: Form[CourseContent], id : String, contents: List[CourseContent])
 
 
-<html>
+<html xmlns="http://www.w3.org/1999/html">
     <head>
         <title>edArea creating course</title>
         <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
@@ -44,7 +44,7 @@
 
             @if(contents.isEmpty)  {}else   {
         <p> <h5>Айди созданного ранее урока</h5>
-            <input type="number"  name="contentId" placeholder="" value="@createContentForm("contentId").value">
+            <input type="number"  name="contentId" placeholder="" value="@createContentForm("contentId").value" >
                 </p>
             }
 

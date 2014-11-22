@@ -28,6 +28,7 @@ import java.util.UUID;
 @Security.Authenticated(Secured.class)
 public class Content extends Controller {
 
+
     public static Result createContent(String idCont) {
         try {                           //проверка принадлежит ли созданный курс данному пользователю
             Course cour = Course.find.where().like("courseName", "%" + idCont + "%").like("email", "%" + request().username() + "%").findUnique();
@@ -39,34 +40,27 @@ public class Content extends Controller {
                 return ok(addContent.render(Form.form(CourseContent.class), idCont, contents));
             }
         }catch (NullPointerException e) {
-           return redirect(routes.Application.index());
+           return ok(errorpage.render("Forbidden You don't have permission to access",403));
         }
 
 
-        return redirect(routes.Application.index());
+        return ok(errorpage.render("Forbidden You don't have permission to access",403));
+
+
     }
 
     public static Result addContent(String idCont) {
 
-        if(CourseContent.find.where().like("id", "%" + null + "%").findUnique() == null) {
-
-            System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-        }
-
-
-        System.out.println("__________________________________________");
-        System.out.println();
-
         Form<CourseContent> createContentForm = Form.form(CourseContent.class).bindFromRequest();
 
         CourseContent newContent = new CourseContent(
-                idCont,                                                     // имя курса для создаваемого конента
+                idCont,                                                    // имя курса для создаваемого конента
                 createContentForm.get().contentName,
-                CourseContent.find.where().findRowCount()+1,            // уникальный айди
+                CourseContent.find.where().findRowCount()+1,               // уникальный айди
                 createContentForm.get().content,
-                createContentForm.get().contentId,    // id content                                     // айди для создания и группировки нескеольки конентов одного курса
+                createContentForm.get().contentId,                         // айди для создания и группировки нескеольки конентов одного курса
                 createContentForm.get().pathFile,
-                request().username()                                    // создатель конента
+                request().username()                                       // создатель конента
         );
 
         newContent.save();
@@ -84,8 +78,6 @@ public class Content extends Controller {
 
 
 
-        //user,course, contents: List[CourseContent]
-        //return  ok(moreinfocontent.render(User.find.byId(request().username(),Course.find.byId(courseId),content));
         return ok(moreinfocontent.render(User.find.byId(request().username()),Course.find.byId(courseId),content));
     }
 
