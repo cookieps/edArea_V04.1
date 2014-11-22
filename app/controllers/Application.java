@@ -1,21 +1,68 @@
 package controllers;
 
 
+import models.Friends;
 import models.Notification;
+import models.SimpleChat;
 import models.User;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
+import play.mvc.WebSocket;
+import views.html.chat;
 import views.html.index;
 import views.html.login;
 import views.html.registration;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
 
 public class Application extends Controller
 {
+
+    @Security.Authenticated(Secured.class)
+    public static Result chat() {
+
+        List<Friends> friends = Friends.find.where().like("user_email", "%"+request().username()+"%").findList();
+
+        List<User> friendlyUsers = new ArrayList<>();
+        ListIterator<Friends> litr = friends.listIterator();
+        while(litr.hasNext())
+        {
+            Friends friend = litr.next();
+            friendlyUsers.add(User.find.byId(friend.friend_email));
+        }
+
+
+
+
+        return  ok(chat.render(User.find.byId(request().username()), friendlyUsers ));
+    }
+
+    // get the ws.js script
+    public static Result wsJs() {
+        return ok(views.js.ws.render());
+    }
+
+    // Websocket interface
+    public static WebSocket<String> wsInterface(){
+        return new WebSocket<String>(){
+
+            // called when websocket handshake is done
+            public void onReady(WebSocket.In<String> in, WebSocket.Out<String> out){
+                SimpleChat.start(in, out);
+            }
+        };
+    }
+
+
+
+
+
+
+
     @Security.Authenticated(Secured.class)
     public static Result index()
     {

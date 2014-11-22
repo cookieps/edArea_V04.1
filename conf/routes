@@ -36,5 +36,10 @@ POST        /addingContent/:id          controllers.Content.addContent(id : Stri
 
 GET         /courses/:id/:id2           controllers.Content.showContent(id : String,id2 : String)
 
+GET     /assets.javascript.ws.js        controllers.Application.wsJs()
+GET     /wsInterface                    controllers.Application.wsInterface()
+GET     /chat                           controllers.Application.chat()
+
+
 # Map static resources from the /public folder to the /assets URL path
 GET         /assets/*file               controllers.Assets.at(path="/public", file)
