@@ -43,6 +43,8 @@ public class Application extends Controller
 
     // get the ws.js script
     public static Result wsJs() {
+
+
         return ok(views.js.ws.render());
     }
 

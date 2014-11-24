@@ -6,6 +6,9 @@ package models;
 import play.mvc.*;
 import play.libs.*;
 import play.libs.F.*;
+import org.json.*;
+import scala.util.parsing.json.JSONObject;
+import scala.util.parsing.json.JSONObject$;
 
 import java.util.*;
 
@@ -16,7 +19,7 @@ public class SimpleChat{
 
     public static void start(WebSocket.In<String> in, WebSocket.Out<String> out){
 
-
+        //JSONObject obj = new JSONObject("asd");
 
         connections.add(out);
 
