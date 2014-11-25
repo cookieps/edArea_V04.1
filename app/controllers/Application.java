@@ -42,19 +42,20 @@ public class Application extends Controller
     }
 
     // get the ws.js script
-    public static Result wsJs() {
+    public static Result wsJs(String userEmail) {
 
 
-        return ok(views.js.ws.render());
+        return ok(views.js.ws.render(userEmail));
     }
 
     // Websocket interface
-    public static WebSocket<String> wsInterface(){
+    public static WebSocket<String> wsInterface(String userEmail){
         return new WebSocket<String>(){
 
             // called when websocket handshake is done
             public void onReady(WebSocket.In<String> in, WebSocket.Out<String> out){
-                SimpleChat.start(in, out);
+
+                SimpleChat.start(userEmail, in, out);
 
             }
         };
