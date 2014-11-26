@@ -3,6 +3,7 @@ package models;
 /**
  * Created by cookie on 22.11.14.
  */
+import javassist.tools.web.Webserver;
 import jdk.nashorn.internal.parser.JSONParser;
 import org.json.JSONException;
 import play.mvc.*;
@@ -22,30 +23,23 @@ public class SimpleChat{
     private static Map<String, WebSocket.Out<String>> usersConnections = new HashMap<String, WebSocket.Out<String>>();
     public static void start(String username,WebSocket.In<String> in, WebSocket.Out<String> out){
         connections.add(out);
-      //  Map<String, WebSocket.Out<String>> usersConnections = new HashMap<String, WebSocket.Out<String>>();
-        usersConnections.put(username,out);
+        if(usersConnections.containsKey(username)) {System.out.println("Совпадение ключа"); }
+        usersConnections.put(username, out);
 
         in.onMessage(new Callback<String>() {
             @Override
             public void invoke(String s) throws Throwable {
                 SimpleChat.sendMessageTo(s);
-              //  SimpleChat.notifyAll(s);
-
-
             }
         });
 
 
- //       in.onMessage(new Callback<String>(){
- //           public void invoke(String event){
-  //              SimpleChat.notifyAll(event);
-   //         }
-   //     });
 
         in.onClose(new Callback0(){
+            @Override
             public void invoke(){
 
-                SimpleChat.notifyAll("A connection closed");
+
             }
         });
     }
@@ -53,12 +47,16 @@ public class SimpleChat{
     public static void sendMessageTo(String message) throws JSONException {
         JSONObject jsonObj = new JSONObject(message);
         String to = jsonObj.get("to").toString();
+        String from = jsonObj.get("from").toString();
         System.out.println(message);
-       for(String key : usersConnections.keySet()) {
+       for(String key : usersConnections.keySet()) {            // поиск пользователя находящемся в чате
            if(key.equals(to)) {
-               System.out.println("соединение номер" + usersConnections.get(key));
-               WebSocket.Out<String> out = usersConnections.get(key);
+               WebSocket.Out<String> out = usersConnections.get(key);  // отправка сообщения нужном пользователю
                out.write(message);
+
+               WebSocket.Out<String> out2 = usersConnections.get(from); // вывод отправленого сообщения
+               out2.write(message);
+
            }
        }
     }

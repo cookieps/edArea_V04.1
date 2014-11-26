@@ -103,7 +103,11 @@
     color:#003bb3;
     font-weight: 700;
 }
-
+.msg-wrap .media-heading2
+{
+    color:#3e8f3e;
+    font-weight: 700;
+}
 
 .msg-date
 {

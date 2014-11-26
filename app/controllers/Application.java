@@ -10,10 +10,7 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
 import play.mvc.WebSocket;
-import views.html.chat;
-import views.html.index;
-import views.html.login;
-import views.html.registration;
+import views.html.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +20,26 @@ public class Application extends Controller
 {
 
     @Security.Authenticated(Secured.class)
-    public static Result chat() {
+    public static Result chat(int idFrom, int idTo) {
+
+        List<Friends> friends = Friends.find.where().like("user_email", "%"+request().username()+"%").findList();
+
+        List<User> friendlyUsers = new ArrayList<>();
+        ListIterator<Friends> litr = friends.listIterator();
+        while(litr.hasNext())
+        {
+            Friends friend = litr.next();
+            friendlyUsers.add(User.find.byId(friend.friend_email));
+        }
+
+        User sendTo = User.find.where().like("id", Integer.toString(idTo)).findUnique();
+
+
+        return  ok(chat.render(User.find.byId(request().username()), friendlyUsers, sendTo.email ));
+    }
+
+    @Security.Authenticated(Secured.class)
+    public static Result messages() {
 
         List<Friends> friends = Friends.find.where().like("user_email", "%"+request().username()+"%").findList();
 
@@ -38,14 +54,19 @@ public class Application extends Controller
 
 
 
-        return  ok(chat.render(User.find.byId(request().username()), friendlyUsers ));
+        return  ok(messages.render(User.find.byId(request().username()), friendlyUsers));
     }
 
+
+
+
+
+
     // get the ws.js script
-    public static Result wsJs(String userEmail) {
+    public static Result wsJs(String userEmail, String sendTo) {
 
 
-        return ok(views.js.ws.render(userEmail));
+        return ok(views.js.ws.render(userEmail, sendTo));
     }
 
     // Websocket interface
