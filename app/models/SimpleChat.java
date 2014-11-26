@@ -24,6 +24,8 @@ public class SimpleChat{
     public static void start(String username,WebSocket.In<String> in, WebSocket.Out<String> out){
         connections.add(out);
         if(usersConnections.containsKey(username)) {System.out.println("Совпадение ключа"); }
+        System.out.println(in);
+        System.out.println(out);
         usersConnections.put(username, out);
 
         in.onMessage(new Callback<String>() {
@@ -38,7 +40,7 @@ public class SimpleChat{
         in.onClose(new Callback0(){
             @Override
             public void invoke(){
-
+                System.out.println(in);
 
             }
         });
@@ -53,7 +55,6 @@ public class SimpleChat{
            if(key.equals(to)) {
                WebSocket.Out<String> out = usersConnections.get(key);  // отправка сообщения нужном пользователю
                out.write(message);
-
                WebSocket.Out<String> out2 = usersConnections.get(from); // вывод отправленого сообщения
                out2.write(message);
 
