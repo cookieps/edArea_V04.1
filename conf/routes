@@ -37,7 +37,7 @@ POST        /addingContent/:id          controllers.Content.addContent(id : Stri
 GET         /courses/:id/:id2           controllers.Content.showContent(id : String,id2 : String)
 
 GET     /assets.javascript.ws.js        controllers.Application.wsJs(userEmail : String, sendTo : String)
-GET     /wsInterface                    controllers.Application.wsInterface(useremail : String)
+GET     /wsInterface                    controllers.Application.wsInterface(useremail : String, sendTo : String)
 GET     /chat/showdialog=:idfrom&:idto  controllers.Application.chat(idfrom : Int, idto : Int)
 GET     /messages                       controllers.Application.messages()
 

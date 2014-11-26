@@ -70,13 +70,13 @@ public class Application extends Controller
     }
 
     // Websocket interface
-    public static WebSocket<String> wsInterface(String userEmail){
+    public static WebSocket<String> wsInterface(String userEmail, String sendTo){
         return new WebSocket<String>(){
 
             // called when websocket handshake is done
             public void onReady(WebSocket.In<String> in, WebSocket.Out<String> out){
 
-                SimpleChat.start(userEmail, in, out);
+                SimpleChat.start(userEmail, sendTo, in, out);
 
             }
         };
